@@ -8,7 +8,31 @@ knit: (function(input_file, encoding) {
 output:
   html_document:
     df_print: paged
+    theme: darkly
+    toc: true
+    toc_float: true
+    code_folding: hide
 ---
+
+```{=html}
+<style type="text/css">
+.main-container {
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+```
+
+```{r}
+library("htmltools")
+library("here")
+library("dplyr")
+library("RSocrata")
+library("tidyverse")
+library(openxlsx) 
+library(googledrive) 
+```
 
 # [Vendor Payments](https://data.fultoncountyga.gov/Tax-Finance/Vendor-Payments/mxhc-krcg)
 
@@ -29,7 +53,6 @@ VendorPayments <- read.socrata(
 ```{r}
 VendorPayments
 ```
-
 
 ```{r}
 VendorPayments <-
@@ -59,19 +82,19 @@ VendorPayments <-
 summary(VendorPayments, maxsum = 8)
 ```
 
+# Upload Data to Goodle Drive
 
+```{r upload-VendorPayments-Data, cache=TRUE, cache.extra = Sys.Date()} 
 
-
-
-
-```{upload-VendorPayments-Data, cache=TRUE, cache.extra = Sys.Date()}
-#googledrive::drive_auth()
-library(openxlsx)
-library(googledrive)
-openxlsx::write.xlsx(list("Vendor Payments" = VendorPayments) , "Atlanta.xlsx", overwrite = TRUE, asTable = TRUE, freezePane = c("firstRow"), colWidths = "auto", withFilter = TRUE)
-#googledrive::drive_upload(media ="Atlanta.xlsx",   type = "spreadsheet", overwrite = TRUE)
-googledrive::drive_update(media ="Atlanta.xlsx", file = as_id("1yVUKyYIfw6-2f6HfHImNtVORrBTnuIuCpZRDrNCYaI8"))
+#googledrive::drive_auth() 
+openxlsx::write.xlsx(list("Vendor Payments" = VendorPayments) , here("data/Atlanta.xlsx"), overwrite = TRUE, asTable = TRUE, freezePane = c("firstRow"), colWidths = "auto", withFilter = TRUE) 
+#googledrive::drive_upload(media ="Atlanta.xlsx",   type = "spreadsheet", overwrite = TRUE) 
+googledrive::drive_update(media =here("data/Atlanta.xlsx"), file = as_id("1yVUKyYIfw6-2f6HfHImNtVORrBTnuIuCpZRDrNCYaI8"))
 ```
 
 
+# Present Data in Tablea
 
+```{r}
+includeHTML(path = here("docs/tableau-dashboard.html")) 
+```
