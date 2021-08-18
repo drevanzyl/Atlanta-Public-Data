@@ -7,6 +7,7 @@ knit: (function(input_file, encoding) {
  output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
 output:
   html_document:
+    css: style.css
     df_print: paged
     theme: darkly
     toc: true
@@ -14,31 +15,26 @@ output:
     code_folding: hide
 ---
 
-```{=html}
-<style type="text/css">
-.main-container {
-  max-width: 1800px;
-  margin-left: auto;
-  margin-right: auto;
-}
-</style>
-```
 
-```{r}
+
+```{r message=FALSE, warning=FALSE}
 library("htmltools")
 library("here")
 library("dplyr")
 library("RSocrata")
 library("tidyverse")
-library(openxlsx) 
-library(googledrive) 
+library("openxlsx") 
+library("googledrive")
+library("knitr")
 ```
 
-# [Vendor Payments](https://data.fultoncountyga.gov/Tax-Finance/Vendor-Payments/mxhc-krcg)
+# Vendor Payments
+
+[Vendor Payments](https://data.fultoncountyga.gov/Tax-Finance/Vendor-Payments/mxhc-krcg)
 
 This dataset consists of a listing of payments made to Fulton County vendors for poducts and services provided to the County. The payment records span the period from January 1, 2014 to present. Included with each payment record is the disbursement date, the department making the payment, the type of service or product, the fund from which the payment is drawn, the payment amount and the name of the vendor to which the payment was made. This dataset is updated weekly.
 
-```{r download-vendor-payments, cache=TRUE, cache.extra = Sys.Date()}
+```{r download-vendor-payments, cache=TRUE, cache.extra = Sys.Date(), message=FALSE, warning=FALSE}
 ## Install the required package with:
 ## install.packages("RSocrata")
 library("dplyr")
@@ -50,11 +46,9 @@ VendorPayments <- read.socrata(
 )
 ```
 
-```{r}
-VendorPayments
-```
 
-```{r}
+
+```{r message=FALSE, warning=FALSE}
 VendorPayments <-
         VendorPayments %>% mutate(payment_type = as.factor(payment_type),
                                   city = as.factor(city),
@@ -79,12 +73,21 @@ VendorPayments <-
                                   department_name = as.factor(department_name)) %>%
         select(-c("vendor_code", "check_no","dis_doc_id", "payment_document", "vendor_invoice_no", "dept", "unit", "fiscal_year", "fy_period", "object", "fund", "vendor_invoice_date", "payment_type", "disb_week", "vendor_invoice_week", "check_clearance_or_cancel_date", "check_cc_week",	"city"
 ))
-summary(VendorPayments, maxsum = 8)
+
+```
+
+```{r message=FALSE, warning=FALSE}
+glimpse(head(VendorPayments)) 
+```
+
+
+```{r message=FALSE, warning=FALSE}
+VendorPayments
 ```
 
 # Upload Data to Goodle Drive
 
-```{r upload-VendorPayments-Data, cache=TRUE, cache.extra = Sys.Date()} 
+```{r upload-VendorPayments-Data, cache=TRUE, cache.extra = Sys.Date(), message=FALSE, warning=FALSE} 
 
 #googledrive::drive_auth() 
 openxlsx::write.xlsx(list("Vendor Payments" = VendorPayments) , here("data/Atlanta.xlsx"), overwrite = TRUE, asTable = TRUE, freezePane = c("firstRow"), colWidths = "auto", withFilter = TRUE) 
@@ -95,6 +98,8 @@ googledrive::drive_update(media =here("data/Atlanta.xlsx"), file = as_id("1yVUKy
 
 # Present Data in Tablea
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 includeHTML(path = here("docs/tableau-dashboard.html")) 
 ```
+
+
