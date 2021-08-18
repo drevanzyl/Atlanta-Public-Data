@@ -1,5 +1,10 @@
 ---
 title: "Atlanta Public Data"
+knit: (function(input_file, encoding) {
+  out_dir <- 'docs';
+  rmarkdown::render(input_file,
+ encoding=encoding,
+ output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
 output:
   html_document:
     df_print: paged
@@ -9,7 +14,7 @@ output:
 
 This dataset consists of a listing of payments made to Fulton County vendors for poducts and services provided to the County. The payment records span the period from January 1, 2014 to present. Included with each payment record is the disbursement date, the department making the payment, the type of service or product, the fund from which the payment is drawn, the payment amount and the name of the vendor to which the payment was made. This dataset is updated weekly.
 
-```{r}
+```{r download-vendor-payments, cache=TRUE, cache.extra = Sys.Date()}
 ## Install the required package with:
 ## install.packages("RSocrata")
 library("dplyr")
@@ -59,7 +64,7 @@ summary(VendorPayments, maxsum = 8)
 
 
 
-```{r}
+```{upload-VendorPayments-Data, cache=TRUE, cache.extra = Sys.Date()}
 #googledrive::drive_auth()
 library(openxlsx)
 library(googledrive)
