@@ -63,7 +63,7 @@ if (window.hljs) {
 
 
 
-<link rel="stylesheet" href="data:text/css,%2Emain%2Dcontainer%7Bmargin%2Dleft%3A%200px%20%21important%3Bmargin%2Dright%3A%200px%20%21important%3Bmax%2Dwidth%3A%20100%25%20%21important%3B%7D%20" type="text/css" />
+<link rel="stylesheet" href="data:text/css,%2Emain%2Dcontainer%7B%0Amargin%2Dleft%3A%200px%20%21important%3B%0Amargin%2Dright%3A%200px%20%21important%3B%0Amax%2Dwidth%3A%20100%25%20%21important%3B%0A%7D%20" type="text/css" />
 
 
 
@@ -307,14 +307,14 @@ VendorPayments &lt;- read.socrata(
 <pre class="r"><code>glimpse(head(VendorPayments)) </code></pre>
 <pre><code>## Rows: 6
 ## Columns: 8
-## $ disb_date         &lt;dttm&gt; 2021-08-13, 2021-08-13, 2021-08-13, 2021-08-13, 202~
-## $ department_name   &lt;fct&gt; &quot;Commission District 6&quot;, &quot;County Comm Clerk&quot;, &quot;Count~
-## $ unit_name         &lt;fct&gt; Commissioner Abdur-Rahman, Co Comm-Clerk Of Comm, Ex~
-## $ object_name       &lt;fct&gt; &quot;Professional Services&quot;, &quot;Court Rep &amp; Other Trans Se~
-## $ fund_name         &lt;fct&gt; General, General, General, General, EMERGENCY RENTAL~
+## $ disb_date         &lt;dttm&gt; 2021-08-13, 2021-08-13, 2021-08-13, 2021-08-13, 202…
+## $ department_name   &lt;fct&gt; &quot;Commission District 6&quot;, &quot;County Comm Clerk&quot;, &quot;Count…
+## $ unit_name         &lt;fct&gt; Commissioner Abdur-Rahman, Co Comm-Clerk Of Comm, Ex…
+## $ object_name       &lt;fct&gt; &quot;Professional Services&quot;, &quot;Court Rep &amp; Other Trans Se…
+## $ fund_name         &lt;fct&gt; General, General, General, General, EMERGENCY RENTAL…
 ## $ amount            &lt;dbl&gt; 150.00, 2984.45, 46.13, 294.00, 9463.84, 5656.25
-## $ vendor_legal_name &lt;fct&gt; &quot;toronto roberts&quot;, &quot;Stacie Walker Alexander&quot;, &quot;AT&amp;T ~
-## $ check_status      &lt;fct&gt; Disbursed, Disbursed, Disbursed, Disbursed, Disburse~</code></pre>
+## $ vendor_legal_name &lt;fct&gt; &quot;toronto roberts&quot;, &quot;Stacie Walker Alexander&quot;, &quot;AT&amp;T …
+## $ check_status      &lt;fct&gt; Disbursed, Disbursed, Disbursed, Disbursed, Disburse…</code></pre>
 <pre class="r"><code>VendorPayments</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
