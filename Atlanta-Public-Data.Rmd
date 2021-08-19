@@ -111,7 +111,10 @@ dtm <- TermDocumentMatrix(docs)
 matrix <- as.matrix(dtm) 
 words <- sort(rowSums(matrix),decreasing=TRUE) 
 df <- data.frame(word = names(words),freq=words)
+<<<<<<< HEAD
 df %>% arrange(desc(freq) )
+=======
+>>>>>>> 232bf64a2600f0d589dd135a88bffdd3fe987598
 ```
 
 
