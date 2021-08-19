@@ -26,6 +26,9 @@ library("tidyverse")
 library("openxlsx") 
 library("googledrive")
 library("knitr")
+library("wordcloud")
+library("RColorBrewer")
+library("wordcloud2")
 ```
 
 # Vendor Payments
@@ -84,6 +87,39 @@ glimpse(head(VendorPayments))
 ```{r message=FALSE, warning=FALSE}
 VendorPayments
 ```
+
+
+
+# Word Cloud
+
+```{r}
+#install.packages("tm")
+library(tm)
+#Create a vector containing only the text
+text <- VendorPayments$unit_name
+# Create a corpus  
+docs <- Corpus(VectorSource(text))
+docs <- docs %>%
+  tm_map(removeNumbers) %>%
+  tm_map(removePunctuation) %>%
+  tm_map(stripWhitespace)
+docs <- tm_map(docs, content_transformer(tolower))
+docs <- tm_map(docs, removeWords, stopwords("english"))
+```
+```{r}
+dtm <- TermDocumentMatrix(docs) 
+matrix <- as.matrix(dtm) 
+words <- sort(rowSums(matrix),decreasing=TRUE) 
+df <- data.frame(word = names(words),freq=words)
+df %>% arrange(desc(freq) )
+```
+
+
+```{r}
+set.seed(1234) # for reproducibility 
+wordcloud2(data=df, size=1.6, color='random-dark')
+```
+
 
 # Upload Data to Goodle Drive
 
