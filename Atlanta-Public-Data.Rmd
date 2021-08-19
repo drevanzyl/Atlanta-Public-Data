@@ -111,10 +111,9 @@ dtm <- TermDocumentMatrix(docs)
 matrix <- as.matrix(dtm) 
 words <- sort(rowSums(matrix),decreasing=TRUE) 
 df <- data.frame(word = names(words),freq=words)
-<<<<<<< HEAD
+
 df %>% arrange(desc(freq) )
-=======
->>>>>>> 232bf64a2600f0d589dd135a88bffdd3fe987598
+
 ```
 
 
@@ -135,7 +134,10 @@ googledrive::drive_update(media =here("data/Atlanta.xlsx"), file = as_id("1yVUKy
 ```
 
 
-# Present Data in Tablea
+[Atlanta](https://docs.google.com/spreadsheets/d/1yVUKyYIfw6-2f6HfHImNtVORrBTnuIuCpZRDrNCYaI8/edit#gid=1167279414)
+
+
+# Present Data in Tableau
 
 ```{r message=FALSE, warning=FALSE}
 includeHTML(path = here("docs/tableau-dashboard.html")) 
