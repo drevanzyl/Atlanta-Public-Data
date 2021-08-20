@@ -140,4 +140,11 @@ The processed data stored in Google Sheets is used in [Tableau Public](https://p
 includeHTML(path = here("docs/tableau-dashboard.html")) 
 ```
 
+# Pushing Updates to GitHub
+
+```{r eval=FALSE, include=FALSE}
+library(gitcreds)
+
+gitcreds_set()
+```
 
