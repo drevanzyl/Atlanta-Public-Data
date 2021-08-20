@@ -340,8 +340,9 @@ docs &lt;- docs %&gt;%
   tm_map(removePunctuation) %&gt;%
   tm_map(stripWhitespace)
 docs &lt;- tm_map(docs, content_transformer(tolower))
-docs &lt;- tm_map(docs, removeWords, stopwords(&quot;english&quot;))</code></pre>
-<pre class="r"><code>dtm &lt;- TermDocumentMatrix(docs) 
+docs &lt;- tm_map(docs, removeWords, stopwords(&quot;english&quot;))
+
+dtm &lt;- TermDocumentMatrix(docs) 
 matrix &lt;- as.matrix(dtm) 
 words &lt;- sort(rowSums(matrix),decreasing=TRUE) 
 df &lt;- data.frame(word = names(words),freq=words)
@@ -385,6 +386,9 @@ googledrive::drive_update(media =here(&quot;data/Atlanta.xlsx&quot;), file = as_
 
 </body>
 </html>
+</div>
+<div id="pushing-updates-to-github" class="section level1">
+<h1>Pushing Updates to GitHub</h1>
 </div>
 
 

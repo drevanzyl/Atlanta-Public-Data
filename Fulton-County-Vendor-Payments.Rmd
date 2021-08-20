@@ -91,7 +91,7 @@ VendorPayments
 
 # Word Cloud
 
-```{r unit_name_word_cloud, cache=TRUE, cache.extra = Sys.Date(), message=FALSE, warning=FALSE}
+```{r unit_name_words, cache=TRUE, cache.extra = Sys.Date(), message=FALSE, warning=FALSE}
 #install.packages("tm")
 library(tm)
 #Create a vector containing only the text
@@ -104,8 +104,7 @@ docs <- docs %>%
   tm_map(stripWhitespace)
 docs <- tm_map(docs, content_transformer(tolower))
 docs <- tm_map(docs, removeWords, stopwords("english"))
-```
-```{r message=FALSE, warning=FALSE}
+
 dtm <- TermDocumentMatrix(docs) 
 matrix <- as.matrix(dtm) 
 words <- sort(rowSums(matrix),decreasing=TRUE) 
@@ -113,9 +112,15 @@ df <- data.frame(word = names(words),freq=words)
 
 df %>% arrange(desc(freq) )
 
+
+```
+
+
+```{r unit_name_words_cloud, cache=TRUE, cache.extra = Sys.Date(), message=FALSE, warning=FALSE}
 set.seed(1234) # for reproducibility 
 wordcloud2(data=df, size=1.6, color='random-dark')
 ```
+
 
 
 # Upload Data to Goodle Drive
