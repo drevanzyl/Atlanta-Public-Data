@@ -39,6 +39,16 @@ When I searched for the most popular datasets available on [Fulton County Open D
 
 More information, including the data dictionary, can be found at the source site: [Vendor Payments](https://data.fultoncountyga.gov/Tax-Finance/Vendor-Payments/mxhc-krcg). 
 
+# Project Overview
+
+There are 5 major components or outputs in this analysis project: 
+
+1. An [R Project hosted on Gitub](https://github.com/drevanzyl/Fulton-County-Vendor-Payments). 
+2. Within the project, there is a [The Atlanta-Public-Data.Rmd](https://github.com/drevanzyl/Fulton-County-Vendor-Payments/blob/main/Fulton-County-Vendor-Payments.Rmd) file which downloads, processes, and loads the data to Google Sheets.  
+3. [The Atlanta-Public-Data.Rmd](https://github.com/drevanzyl/Fulton-County-Vendor-Payments/blob/main/Atlanta-Public-Data.Rmd) file also produces a [webpage](https://drevanzyl.github.io/Fulton-County-Vendor-Payments/index.html) that contains narrative, analysis, and the R syntax used for each step. 
+4. The processed data can be found on [Google Sheets](https://docs.google.com/spreadsheets/d/1yVUKyYIfw6-2f6HfHImNtVORrBTnuIuCpZRDrNCYaI8/edit#gid=1167279414).
+5. The processed data stored in Google Sheets is used in [Tableau Public](https://public.tableau.com/s/) to generate [interactive visualizations](https://public.tableau.com/app/profile/andr.van.zyl/viz/Atlanta_16292337333820/About). 
+
 
 # Getting the Data
 
@@ -91,7 +101,7 @@ VendorPayments
 
 # Word Cloud
 
-```{r unit_name_word_cloud, cache=TRUE, cache.extra = Sys.Date(), message=FALSE, warning=FALSE}
+```{r unit_name_words, cache=TRUE, cache.extra = Sys.Date(), message=FALSE, warning=FALSE}
 #install.packages("tm")
 library(tm)
 #Create a vector containing only the text
@@ -104,8 +114,7 @@ docs <- docs %>%
   tm_map(stripWhitespace)
 docs <- tm_map(docs, content_transformer(tolower))
 docs <- tm_map(docs, removeWords, stopwords("english"))
-```
-```{r message=FALSE, warning=FALSE}
+
 dtm <- TermDocumentMatrix(docs) 
 matrix <- as.matrix(dtm) 
 words <- sort(rowSums(matrix),decreasing=TRUE) 
@@ -113,9 +122,15 @@ df <- data.frame(word = names(words),freq=words)
 
 df %>% arrange(desc(freq) )
 
+
+```
+
+
+```{r unit_name_words_cloud, cache=TRUE, cache.extra = Sys.Date(), message=FALSE, warning=FALSE}
 set.seed(1234) # for reproducibility 
 wordcloud2(data=df, size=1.6, color='random-dark')
 ```
+
 
 
 # Upload Data to Goodle Drive

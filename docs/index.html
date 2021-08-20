@@ -281,6 +281,18 @@ library(&quot;wordcloud2&quot;)</code></pre>
 <p>When I searched for the most popular datasets available on <a href="https://data.fultoncountyga.gov/">Fulton County Open Data</a> on August 20, 2021, this was the third most accessed dataset. As a public health professional, I was curious to see how many payments went towards vendors providing COVID-19 and other health-related materials and services.</p>
 <p>More information, including the data dictionary, can be found at the source site: <a href="https://data.fultoncountyga.gov/Tax-Finance/Vendor-Payments/mxhc-krcg">Vendor Payments</a>.</p>
 </div>
+<div id="project-overview" class="section level1">
+<h1>Project Overview</h1>
+<p>There are 5 major components or outputs in this analysis project:</p>
+<ol style="list-style-type: decimal">
+<li>An <a href="https://github.com/drevanzyl/Fulton-County-Vendor-Payments">R Project hosted on Gitub</a>.</li>
+<li>Within the project, there is a <a href="https://github.com/drevanzyl/Fulton-County-Vendor-Payments/blob/main/Fulton-County-Vendor-Payments.Rmd">The Atlanta-Public-Data.Rmd</a> file which downloads, processes, and loads the data to Google Sheets.<br />
+</li>
+<li><a href="https://github.com/drevanzyl/Fulton-County-Vendor-Payments/blob/main/Atlanta-Public-Data.Rmd">The Atlanta-Public-Data.Rmd</a> file also produces a <a href="https://drevanzyl.github.io/Fulton-County-Vendor-Payments/index.html">webpage</a> that contains narrative, analysis, and the R syntax used for each step.</li>
+<li>The processed data can be found on <a href="https://docs.google.com/spreadsheets/d/1yVUKyYIfw6-2f6HfHImNtVORrBTnuIuCpZRDrNCYaI8/edit#gid=1167279414">Google Sheets</a>.</li>
+<li>The processed data stored in Google Sheets is used in <a href="https://public.tableau.com/s/">Tableau Public</a> to generate <a href="https://public.tableau.com/app/profile/andr.van.zyl/viz/Atlanta_16292337333820/About">interactive visualizations</a>.</li>
+</ol>
+</div>
 <div id="getting-the-data" class="section level1">
 <h1>Getting the Data</h1>
 <pre class="r"><code>## Install the required package with:
@@ -340,8 +352,9 @@ docs &lt;- docs %&gt;%
   tm_map(removePunctuation) %&gt;%
   tm_map(stripWhitespace)
 docs &lt;- tm_map(docs, content_transformer(tolower))
-docs &lt;- tm_map(docs, removeWords, stopwords(&quot;english&quot;))</code></pre>
-<pre class="r"><code>dtm &lt;- TermDocumentMatrix(docs) 
+docs &lt;- tm_map(docs, removeWords, stopwords(&quot;english&quot;))
+
+dtm &lt;- TermDocumentMatrix(docs) 
 matrix &lt;- as.matrix(dtm) 
 words &lt;- sort(rowSums(matrix),decreasing=TRUE) 
 df &lt;- data.frame(word = names(words),freq=words)
@@ -385,6 +398,9 @@ googledrive::drive_update(media =here(&quot;data/Atlanta.xlsx&quot;), file = as_
 
 </body>
 </html>
+</div>
+<div id="pushing-updates-to-github" class="section level1">
+<h1>Pushing Updates to GitHub</h1>
 </div>
 
 
