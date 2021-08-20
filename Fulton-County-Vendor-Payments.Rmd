@@ -1,5 +1,5 @@
 ---
-title: "Atlanta Public Data"
+title: "Fulton County Vendor Payments"
 knit: (function(input_file, encoding) {
   out_dir <- 'docs';
   rmarkdown::render(input_file,
@@ -31,11 +31,16 @@ library("RColorBrewer")
 library("wordcloud2")
 ```
 
-# Vendor Payments
+# About the Vendor Payments Data
 
-[Vendor Payments](https://data.fultoncountyga.gov/Tax-Finance/Vendor-Payments/mxhc-krcg)
+The dataset used for this analysis consists of a listing of payments made to Fulton County vendors for products and services provided to the County. The payment records span the period from January 1, 2014, to the present. Included with each payment record is the disbursement date, the department making the payment, the type of service or product, the fund from which the payment is drawn, the payment amount, and the name of the vendor to which the payment was made. This dataset is updated weekly. 
 
-This dataset consists of a listing of payments made to Fulton County vendors for poducts and services provided to the County. The payment records span the period from January 1, 2014 to present. Included with each payment record is the disbursement date, the department making the payment, the type of service or product, the fund from which the payment is drawn, the payment amount and the name of the vendor to which the payment was made. This dataset is updated weekly.
+When I searched for the most popular datasets available on [Fulton County Open Data](https://data.fultoncountyga.gov/) on August 20, 2021, this was the third most accessed dataset. As a public health professional, I was curious to see how many payments went towards vendors providing COVID-19 and other health-related materials and services.  
+
+More information, including the data dictionary, can be found at the source site: [Vendor Payments](https://data.fultoncountyga.gov/Tax-Finance/Vendor-Payments/mxhc-krcg). 
+
+
+# Getting the Data
 
 ```{r download-vendor-payments, cache=TRUE, cache.extra = Sys.Date(), message=FALSE, warning=FALSE}
 ## Install the required package with:
@@ -49,6 +54,8 @@ VendorPayments <- read.socrata(
 )
 ```
 
+
+# Processing the Data
 
 
 ```{r message=FALSE, warning=FALSE}
@@ -77,14 +84,6 @@ VendorPayments <-
         select(-c("vendor_code", "check_no","dis_doc_id", "payment_document", "vendor_invoice_no", "dept", "unit", "fiscal_year", "fy_period", "object", "fund", "vendor_invoice_date", "payment_type", "disb_week", "vendor_invoice_week", "check_clearance_or_cancel_date", "check_cc_week",	"city"
 ))
 
-```
-
-```{r message=FALSE, warning=FALSE}
-glimpse(head(VendorPayments)) 
-```
-
-
-```{r message=FALSE, warning=FALSE}
 VendorPayments
 ```
 
@@ -92,7 +91,7 @@ VendorPayments
 
 # Word Cloud
 
-```{r}
+```{r unit_name_word_cloud, cache=TRUE, cache.extra = Sys.Date(), message=FALSE, warning=FALSE}
 #install.packages("tm")
 library(tm)
 #Create a vector containing only the text
@@ -106,7 +105,7 @@ docs <- docs %>%
 docs <- tm_map(docs, content_transformer(tolower))
 docs <- tm_map(docs, removeWords, stopwords("english"))
 ```
-```{r}
+```{r message=FALSE, warning=FALSE}
 dtm <- TermDocumentMatrix(docs) 
 matrix <- as.matrix(dtm) 
 words <- sort(rowSums(matrix),decreasing=TRUE) 
@@ -114,10 +113,6 @@ df <- data.frame(word = names(words),freq=words)
 
 df %>% arrange(desc(freq) )
 
-```
-
-
-```{r}
 set.seed(1234) # for reproducibility 
 wordcloud2(data=df, size=1.6, color='random-dark')
 ```
@@ -134,10 +129,12 @@ googledrive::drive_update(media =here("data/Atlanta.xlsx"), file = as_id("1yVUKy
 ```
 
 
-[Atlanta](https://docs.google.com/spreadsheets/d/1yVUKyYIfw6-2f6HfHImNtVORrBTnuIuCpZRDrNCYaI8/edit#gid=1167279414)
+The processed data can be found on [Google Sheets](https://docs.google.com/spreadsheets/d/1yVUKyYIfw6-2f6HfHImNtVORrBTnuIuCpZRDrNCYaI8/edit#gid=1167279414).
 
 
 # Present Data in Tableau
+
+The processed data stored in Google Sheets is used in [Tableau Public](https://public.tableau.com/s/) to generate [interactive visualizations](https://public.tableau.com/app/profile/andr.van.zyl/viz/Atlanta_16292337333820/About). 
 
 ```{r message=FALSE, warning=FALSE}
 includeHTML(path = here("docs/tableau-dashboard.html")) 
