@@ -44,8 +44,8 @@ More information, including the data dictionary, can be found at the source site
 There are 5 major components or outputs in this analysis project: 
 
 1. An [R Project hosted on Gitub](https://github.com/drevanzyl/Fulton-County-Vendor-Payments). 
-2. Within the project, there is a [The Atlanta-Public-Data.Rmd](https://github.com/drevanzyl/Fulton-County-Vendor-Payments/blob/main/Fulton-County-Vendor-Payments.Rmd) file which downloads, processes, and loads the data to Google Sheets.  
-3. [The Atlanta-Public-Data.Rmd](https://github.com/drevanzyl/Fulton-County-Vendor-Payments/blob/main/Atlanta-Public-Data.Rmd) file also produces a [webpage](https://drevanzyl.github.io/Fulton-County-Vendor-Payments/index.html) that contains narrative, analysis, and the R syntax used for each step. 
+2. Within the project, there is a [Fulton-County-Vendor-Payments.Rmd](https://github.com/drevanzyl/Fulton-County-Vendor-Payments/blob/main/Fulton-County-Vendor-Payments.Rmd) file which downloads, processes, and loads the data to Google Sheets.  
+3. [Fulton-County-Vendor-Payments.Rmd](https://github.com/drevanzyl/Fulton-County-Vendor-Payments/blob/main/Fulton-County-Vendor-Payments.Rmd) file also produces a [webpage](https://drevanzyl.github.io/Fulton-County-Vendor-Payments/index.html) that contains narrative, analysis, and the R syntax used for each step. 
 4. The processed data can be found on [Google Sheets](https://docs.google.com/spreadsheets/d/1yVUKyYIfw6-2f6HfHImNtVORrBTnuIuCpZRDrNCYaI8/edit#gid=1167279414).
 5. The processed data stored in Google Sheets is used in [Tableau Public](https://public.tableau.com/s/) to generate [interactive visualizations](https://public.tableau.com/app/profile/andr.van.zyl/viz/Atlanta_16292337333820/About). 
 
