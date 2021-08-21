@@ -90,11 +90,10 @@ VendorPayments <-
                                   #  = as.factor(),
                                   #  = as.factor(),
                                   #  = as.factor(),
-                                  department_name = as.factor(department_name)) %>%
-        select(-c("vendor_code", "check_no","dis_doc_id", "payment_document", "vendor_invoice_no", "dept", "unit", "fiscal_year", "fy_period", "object", "fund", "vendor_invoice_date", "payment_type", "disb_week", "vendor_invoice_week", "check_clearance_or_cancel_date", "check_cc_week",	"city"
-))
+                                  department_name = as.factor(department_name),
+                                  covid_related = str_detect(toupper(paste(department_name, unit_name, object_name, fund_name, vendor_legal_name)), "COVID")) 
 
-VendorPayments
+
 ```
 
 
@@ -136,9 +135,11 @@ wordcloud2(data=df, size=1.6, color='random-dark')
 # Upload Data to Goodle Drive
 
 ```{r upload-VendorPayments-Data, cache=TRUE, cache.extra = Sys.Date(), message=FALSE, warning=FALSE} 
-
+VendorPaymentsGoogle <- VendorPayments %>%
+        select(-c("vendor_code", "check_no","dis_doc_id", "payment_document", "vendor_invoice_no", "dept", "unit", "fiscal_year", "fy_period", "object", "fund", "vendor_invoice_date", "payment_type", "disb_week", "vendor_invoice_week", "check_clearance_or_cancel_date", "check_cc_week",	"city"
+))
 #googledrive::drive_auth() 
-openxlsx::write.xlsx(list("Vendor Payments" = VendorPayments) , here("data/Atlanta.xlsx"), overwrite = TRUE, asTable = TRUE, freezePane = c("firstRow"), colWidths = "auto", withFilter = TRUE) 
+openxlsx::write.xlsx(list("Vendor Payments" = VendorPaymentsGoogle) , here("data/Atlanta.xlsx"), overwrite = TRUE, asTable = TRUE, freezePane = c("firstRow"), colWidths = "auto", withFilter = TRUE) 
 #googledrive::drive_upload(media ="Atlanta.xlsx",   type = "spreadsheet", overwrite = TRUE) 
 googledrive::drive_update(media =here("data/Atlanta.xlsx"), file = as_id("1yVUKyYIfw6-2f6HfHImNtVORrBTnuIuCpZRDrNCYaI8"))
 ```
